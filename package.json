@@ -9,9 +9,11 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "leaflet": "^1.5.1",
     "vue": "^2.6.10",
     "vue-apollo": "^3.0.0-beta.11",
-    "vue-router": "^3.0.3"
+    "vue-router": "^3.0.3",
+    "vue2-leaflet": "^2.2.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.10.0",
