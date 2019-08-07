@@ -1,5 +1,5 @@
 <template>
-  <div id="observation-feed" class="container bg-gray-200 w-1/4 mx-auto h-screen">
+  <div id="observation-feed" class="container bg-gray-200 h-screen p-2 overflow-y-auto">
 
     <div id="observation-feed-card"
          class="bg-white p-1 mb-1"
@@ -48,10 +48,6 @@ export default {
   name: 'ObservationFeed',
   props: [ 'observationFeed' ],
   computed: {
-    anEncounter () {
-      return this.observationFeed[0]
-    },
-
     observations () {
       return this.observationFeed.map(m => {
         const date = new Date(m.event_start_timestamp)
@@ -69,6 +65,11 @@ export default {
 </script>
 
 <style scoped>
+#observation-feed {
+  min-width: 380px;
+  max-width: 455px;
+}
+
 #observation-feed-card {
   min-width: 375px;
   max-width: 450px;
