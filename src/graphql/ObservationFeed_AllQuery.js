@@ -1,9 +1,10 @@
 import gql from 'graphql-tag'
 
 export const OBSERVATION_FEED_QUERY = gql`
-  query {
+  query ($limit: OffsetPaginationInput, $filter: ObservationFeedFilterInput) {
     observationFeed (
-      limit:{first: 25}
+      limit: $limit
+      filter: $filter
     ) {
       event_uuid
       activity_name
