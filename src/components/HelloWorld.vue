@@ -1,5 +1,5 @@
 <template>
-  <observation-feed :observationFeed="observationFeed" />
+  <observation-feed :observationFeed="observationFeed" v-if="!$apollo.loading"/>
 </template>
 
 <script>
@@ -23,6 +23,7 @@ export default {
         common_name
         species_name
         species_group
+        event_start_timestamp
         wildlife_encounters {
           ind_id
           life_status
