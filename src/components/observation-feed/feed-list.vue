@@ -1,15 +1,24 @@
 <template>
   <div id="observation-feed">
-    <feed-card v-for="(observation, key) in observations" :key="key" :observation="observation" />
+    <recycle-scroller
+      class="scroller"
+      :items="observations"
+      :item-size="104"
+      key-field="event_uuid"
+      v-slot="{ item }"
+    >
+      <feed-card :observation="item" />
+    </recycle-scroller>
   </div>
 </template>
 
 <script>
+import { RecycleScroller } from 'vue-virtual-scroller'
 import FeedCard from './feed-card'
 
 export default {
   name: 'FeedList',
-  components: { FeedCard },
+  components: { RecycleScroller, FeedCard },
   props: [ 'observations' ]
 }
 </script>
