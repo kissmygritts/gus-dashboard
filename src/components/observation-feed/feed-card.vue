@@ -7,7 +7,7 @@
     <div class="flex flex-row justify-between mt">
       <div class="text-center w-1/5 text-gray-800">
         <p class="uppercase text-xs font-thin border-b border-gray-500">date</p>
-        <p class="capitalize text-xs font-light">{{ observation.obs_date }}</p>
+        <p class="capitalize text-xs font-light pt-1 align-baseline">{{ observation.obs_date }}</p>
       </div>
       <div class="text-center w-1/5 text-gray-800">
         <p class="uppercase text-xs font-thin border-b border-gray-500">sex</p>

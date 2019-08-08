@@ -68,12 +68,16 @@ export default {
   },
   computed: {
     queryParameters () {
-      return ({
-        limit: { first: this.first }
-        // filter: {
-        //   common_name: { like: `%${this.commonName}%` }
-        // }
-      })
+      let limit = {
+        first: this.first
+      }
+      let filter = {}
+      let query = { limit }
+
+      if (this.commonName) filter.common_name = { like: `%${this.commonName}%` }
+      if (Object.keys(filter).length !== 0) query.filter = filter
+
+      return query
     }
   }
 }

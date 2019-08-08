@@ -5,33 +5,39 @@
     </div>
     <div class="map-dash bg-green-500 flex-grow h-screen">map</div>
   </div>
-
-  <!-- <div class="map-dashboard flex flex-row">
-    <div class="dashboard-left bg-gray-200 flex-grow-0">
-      <observation-feed-filter @apply-filter="applyFilter" />
-      <observation-feed class="flex-grow-0" :observationFeed="observationFeed" v-if="!$apollo.queries.observationFeed.loading" />
-      <div v-else>loading...</div>
-    </div>
-    <observation-map class="flex-grow h-screen" :mapPoints="mapPoints" />
-  </div> -->
 </template>
 
 <script>
 import { EventBus } from '@/event-bus.js'
 import FeedContainer from '@/components/observation-feed/feed-container.vue'
-import { data } from '@/assets/data.js'
+import { OBSERVATION_FEED_QUERY } from '@/graphql/ObservationFeed_AllQuery.js'
 
 export default {
   name: 'home',
   components: { FeedContainer },
   data () {
     return {
-      observationFeed: data
+      observationFeed: [],
+      queryParameters: {
+        limit: { first: 25 }
+      },
+      mockParams: {}
+    }
+  },
+  apollo: {
+    observationFeed: {
+      query: OBSERVATION_FEED_QUERY,
+      variables () {
+        return {
+          ...this.queryParameters
+        }
+      }
     }
   },
   created () {
     EventBus.$on('eb-apply-filters', data => {
       console.log(JSON.stringify(data))
+      this.queryParameters = data
     })
   }
 }
@@ -40,7 +46,6 @@ export default {
 // import ObservationFeed from '@/components/organisms/ObservationFeed.vue'
 // import ObservationMap from '@/components/organisms/ObservationMap.vue'
 // import ObservationFeedFilter from '@/components/organisms/ObservationFeedFilter.vue'
-// import { OBSERVATION_FEED_QUERY } from '@/graphql/ObservationFeed_AllQuery.js'
 
 // export default {
 //   name: 'home',
