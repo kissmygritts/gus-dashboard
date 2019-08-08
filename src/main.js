@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import { createProvider } from './vue-apollo'
 import '@/assets/css/tailwind.css'
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 // leaflet init
 import { Icon } from 'leaflet'
