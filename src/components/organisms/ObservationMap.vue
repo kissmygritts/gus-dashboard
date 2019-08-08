@@ -3,6 +3,7 @@
     <l-map
       :zoom="zoom"
       :center="center"
+      v-if="showMap"
     >
       <!-- basemap layers -->
       <l-tile-layer :url="url" />
@@ -34,6 +35,7 @@ export default {
   props: [ 'mapPoints' ],
   data () {
     return {
+      showMap: false,
       zoom: 7,
       center: latLng(39.55, -117.0667),
       url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'
