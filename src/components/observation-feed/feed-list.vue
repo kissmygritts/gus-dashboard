@@ -3,7 +3,7 @@
     <recycle-scroller
       class="scroller"
       :items="observations"
-      :item-size="104"
+      :item-size="78"
       key-field="event_uuid"
       v-slot="{ item }"
     >

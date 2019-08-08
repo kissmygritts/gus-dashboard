@@ -7,7 +7,7 @@
     <div class="flex flex-row justify-between mt">
       <div class="text-center w-1/5 text-gray-800">
         <p class="uppercase text-xs font-thin border-b border-gray-500">date</p>
-        <p class="capitalize text-sm font-light">{{ observation.obs_date }}</p>
+        <p class="capitalize text-xs font-light">{{ observation.obs_date }}</p>
       </div>
       <div class="text-center w-1/5 text-gray-800">
         <p class="uppercase text-xs font-thin border-b border-gray-500">sex</p>
@@ -19,7 +19,7 @@
       </div>
       <div class="text-center w-1/5 text-gray-800">
         <p class="uppercase text-xs font-thin border-b border-gray-500">status</p>
-        <p class="capitalize text-sm font-light">{{ observation.life_status }}</p>
+        <p class="capitalize text-sm font-light">{{ formatHarvest }}</p>
       </div>
     </div>
   </div>
@@ -28,7 +28,16 @@
 <script>
 export default {
   name: 'FeedCard',
-  props: [ 'observation' ]
+  props: [ 'observation' ],
+  computed: {
+    formatHarvest () {
+      if (this.observation.life_status === 'hunter harvest') {
+        return 'harvest'
+      } else {
+        return this.observation.life_status
+      }
+    }
+  }
 }
 </script>
 
