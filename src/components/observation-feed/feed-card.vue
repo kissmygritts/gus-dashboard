@@ -45,5 +45,6 @@ export default {
 .observation-feed-card {
   min-width: 375px;
   max-width: 540px;
+  height: 76px;
 }
 </style>

@@ -22,6 +22,7 @@
 <script>
 import { latLng } from 'leaflet'
 import { LMap, LTileLayer, LCircleMarker } from 'vue2-leaflet'
+import { EventBus } from '@/event-bus.js'
 
 export default {
   name: 'ObservationMap',
@@ -54,6 +55,7 @@ export default {
   methods: {
     handleMarkerClick (id) {
       console.log(id)
+      EventBus.$emit('eb-marker-click', id)
     }
     // handleMouseOver (e) {
     //   console.log('hover mouse over')

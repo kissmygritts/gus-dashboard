@@ -25,7 +25,7 @@ export default {
     return {
       observationFeed: [],
       queryParameters: {
-        limit: { first: 25 }
+        limit: { first: 100 }
       },
       mockParams: {}
     }

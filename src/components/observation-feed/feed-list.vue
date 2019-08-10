@@ -1,9 +1,10 @@
 <template>
   <div id="observation-feed">
+    <button @click="scrollToItem">Scroll Test Button</button>
     <recycle-scroller
-      class="scroller"
+      ref="scroller"
       :items="observations"
-      :item-size="78"
+      :item-size="80"
       key-field="event_uuid"
       v-slot="{ item }"
     >
@@ -14,12 +15,38 @@
 
 <script>
 import { RecycleScroller } from 'vue-virtual-scroller'
-import FeedCard from './feed-card'
+import FeedCard from './feed-card.vue'
+import { EventBus } from '@/event-bus.js'
 
 export default {
   name: 'FeedList',
   components: { RecycleScroller, FeedCard },
-  props: [ 'observations' ]
+  props: [ 'observations' ],
+  data () {
+    return {
+      scrollTo: null
+    }
+  },
+  watch: {
+    scrollTo (oldValue, newValue) {
+      this.scrollToItem()
+    }
+  },
+  methods: {
+    scrollToItem () {
+      // const idx = this.observations.map(m => m.event_uuid)
+      //   .findIndex(i => i === this.scrollTo)
+
+      // console.log(`called scrollTo with id: ${this.scrollTo}, index: ${idx}`)
+      // (this.$refs.scroller).scrollToItem(78)
+      console.log(this.$refs.scroller)
+    }
+  },
+  created () {
+    EventBus.$on('eb-marker-click', id => {
+      this.scrollTo = id
+    })
+  }
 }
 </script>
 
