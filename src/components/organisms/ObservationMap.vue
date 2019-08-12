@@ -34,7 +34,7 @@ export default {
   props: [ 'observations' ],
   data () {
     return {
-      showMap: false,
+      showMap: true,
       zoom: 7,
       center: latLng(39.55, -117.0667),
       url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'
