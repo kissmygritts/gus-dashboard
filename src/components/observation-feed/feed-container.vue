@@ -1,5 +1,5 @@
 <template>
-  <div class="container bg-gray-200 h-screen p-2 overflow-y-auto">
+  <div class="container bg-gray-200 h-screen p-2">
     <feed-filters />
     <feed-list :observations="formattedObservations" />
   </div>

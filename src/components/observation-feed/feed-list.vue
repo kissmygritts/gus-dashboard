@@ -2,10 +2,11 @@
   <div id="observation-feed">
     <button @click="scrollToItem">Scroll Test Button</button>
     <recycle-scroller
+      class="scroller"
       ref="scroller"
       :items="observations"
-      :item-size="80"
-      key-field="event_uuid"
+      :itemSize="80"
+      keyField="event_uuid"
       v-slot="{ item }"
     >
       <feed-card :observation="item" />
@@ -34,12 +35,13 @@ export default {
   },
   methods: {
     scrollToItem () {
-      // const idx = this.observations.map(m => m.event_uuid)
-      //   .findIndex(i => i === this.scrollTo)
+      const idx = this.observations.map(m => m.event_uuid)
+        .findIndex(i => i === this.scrollTo)
 
-      // console.log(`called scrollTo with id: ${this.scrollTo}, index: ${idx}`)
+      console.log(`called scrollTo with id: ${this.scrollTo}, index: ${idx}`)
+      console.log(this.observations[idx])
+      this.$refs.scroller.scrollToItem(idx)
       // (this.$refs.scroller).scrollToItem(78)
-      console.log(this.$refs.scroller)
     }
   },
   created () {
@@ -54,5 +56,10 @@ export default {
 #observation-feed {
   min-width: 380px;
   max-width: 455px;
+  height: 100%;
+}
+
+.scroller {
+  height: 100%;
 }
 </style>
