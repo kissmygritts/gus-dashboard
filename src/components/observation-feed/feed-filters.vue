@@ -61,8 +61,10 @@ export default {
   methods: {
     toggleShowFilters () {
       this.showFilters = !this.showFilters
+      this.$emit('toggle-feed-filters', this.showFilters)
     },
     emitApplyFilter () {
+      this.toggleShowFilters()
       EventBus.$emit('eb-apply-filters', this.queryParameters)
     }
   },

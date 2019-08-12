@@ -1,6 +1,5 @@
 <template>
   <div id="observation-feed">
-    <button @click="scrollToItem">Scroll Test Button</button>
     <recycle-scroller
       class="scroller"
       ref="scroller"
@@ -8,6 +7,7 @@
       :itemSize="80"
       keyField="event_uuid"
       v-slot="{ item }"
+      v-show="showFeed"
     >
       <feed-card :observation="item" />
     </recycle-scroller>
@@ -22,7 +22,7 @@ import { EventBus } from '@/event-bus.js'
 export default {
   name: 'FeedList',
   components: { RecycleScroller, FeedCard },
-  props: [ 'observations' ],
+  props: [ 'observations', 'showFeed' ],
   data () {
     return {
       scrollTo: null
@@ -41,7 +41,6 @@ export default {
       console.log(`called scrollTo with id: ${this.scrollTo}, index: ${idx}`)
       console.log(this.observations[idx])
       this.$refs.scroller.scrollToItem(idx)
-      // (this.$refs.scroller).scrollToItem(78)
     }
   },
   created () {
@@ -56,7 +55,7 @@ export default {
 #observation-feed {
   min-width: 380px;
   max-width: 455px;
-  height: 100%;
+  height: 90%;
 }
 
 .scroller {
