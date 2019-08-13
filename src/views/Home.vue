@@ -6,20 +6,23 @@
     <div class="map-dash bg-green-500 flex-grow h-screen">
       <observation-map :observations="observationFeed" />
     </div>
+    <drawer-slider :visible="drawerVisible" @drawer-visible="toggleDrawer" />
   </div>
 </template>
 
 <script>
 import { EventBus } from '@/event-bus.js'
 import FeedContainer from '@/components/observation-feed/feed-container.vue'
-import ObservationMap from '@/components/organisms/ObservationMap'
+import ObservationMap from '@/components/organisms/ObservationMap.vue'
+import DrawerSlider from '@/components/molecules/drawer-slider.vue'
 import { OBSERVATION_FEED_QUERY } from '@/graphql/ObservationFeed_AllQuery.js'
 
 export default {
   name: 'home',
   components: {
     FeedContainer,
-    ObservationMap
+    ObservationMap,
+    DrawerSlider
   },
   data () {
     return {
@@ -27,7 +30,8 @@ export default {
       queryParameters: {
         limit: { first: 100 }
       },
-      mockParams: {}
+      mockParams: {},
+      drawerVisible: false
     }
   },
   apollo: {
@@ -40,10 +44,20 @@ export default {
       }
     }
   },
+  methods: {
+    toggleDrawer () {
+      this.drawerVisible = !this.drawerVisible
+    }
+  },
   created () {
     EventBus.$on('eb-apply-filters', data => {
       console.log(JSON.stringify(data))
       this.queryParameters = data
+    })
+
+    EventBus.$on('eb-card-clicked', data => {
+      console.log(JSON.stringify(data))
+      this.drawerVisible = true
     })
   }
 }

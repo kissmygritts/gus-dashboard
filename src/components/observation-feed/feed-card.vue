@@ -1,5 +1,7 @@
 <template>
-  <div class="observation-feed-card bg-white p-1 mb-1">
+  <div class="observation-feed-card bg-white p-1 mb-1"
+    @click="cardClicked"
+  >
     <div class="flex flex-row justify-between">
       <span class="text-lg">{{ observation.common_name }}</span>
       <span class="text-lg">{{ observation.ind_id }}</span>
@@ -26,6 +28,8 @@
 </template>
 
 <script>
+import { EventBus } from '@/event-bus.js'
+
 export default {
   name: 'FeedCard',
   props: [ 'observation' ],
@@ -36,6 +40,13 @@ export default {
       } else {
         return this.observation.life_status
       }
+    }
+  },
+  methods: {
+    cardClicked () {
+      EventBus.$emit('eb-card-clicked', {
+        eventUUID: this.observation.event_uuid
+      })
     }
   }
 }
