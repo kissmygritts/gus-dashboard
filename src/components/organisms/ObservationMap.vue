@@ -1,6 +1,7 @@
 <template>
-  <div class="h-screen">
+  <div class="h-screen" ref="mapContainer">
     <l-map
+      ref="map"
       :zoom="zoom"
       :center="center"
       v-if="showMap"
@@ -50,6 +51,9 @@ export default {
           latLng: latLng([ m.y, m.x ])
         }
       })
+    },
+    mapContainerDims () {
+      return this.$refs.mapContainer.clientWidth
     }
   },
   methods: {
@@ -65,6 +69,25 @@ export default {
     //   console.log('hover mouse out')
     //   console.log(e)
     // }
+  },
+  created () {
+    this.$nextTick(() => {
+      EventBus.$on('eb-drawer-slider:update', ({ visible, data }) => {
+        this.$refs.map.mapObject.invalidateSize()
+
+        if (visible) {
+          this.$refs.map.mapObject.setView(
+            latLng(data.latLng.lat, data.latLng.lng),
+            12
+          )
+        } else {
+          this.$refs.map.mapObject.setView(
+            this.center,
+            this.zoom
+          )
+        }
+      })
+    })
   }
 }
 </script>

@@ -45,7 +45,11 @@ export default {
   methods: {
     cardClicked () {
       EventBus.$emit('eb-card-clicked', {
-        eventUUID: this.observation.event_uuid
+        eventUUID: this.observation.event_uuid,
+        latLng: {
+          lat: this.observation.y,
+          lng: this.observation.x
+        }
       })
     }
   }

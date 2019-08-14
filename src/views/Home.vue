@@ -28,7 +28,7 @@ export default {
     return {
       observationFeed: [],
       queryParameters: {
-        limit: { first: 100 }
+        limit: { first: 15 }
       },
       mockParams: {},
       drawerVisible: false
@@ -51,12 +51,10 @@ export default {
   },
   created () {
     EventBus.$on('eb-apply-filters', data => {
-      console.log(JSON.stringify(data))
       this.queryParameters = data
     })
 
     EventBus.$on('eb-card-clicked', data => {
-      console.log(JSON.stringify(data))
       this.drawerVisible = true
     })
   }

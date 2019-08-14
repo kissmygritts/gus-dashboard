@@ -20,12 +20,13 @@ export default {
     },
     drawerWidth: {
       type: String,
-      default: '25%'
+      default: '30%'
     }
   },
   data () {
     return {
-      eventUUID: null
+      eventUUID: null,
+      latLng: null
     }
   },
   computed: {
@@ -41,6 +42,17 @@ export default {
   created () {
     EventBus.$on('eb-card-clicked', data => {
       this.eventUUID = data.eventUUID
+      this.latLng = data.latLng
+    })
+  },
+  updated () {
+    console.log('updated')
+    EventBus.$emit('eb-drawer-slider:update', {
+      visible: this.visible,
+      data: {
+        eventUUID: this.eventUUID,
+        latLng: this.latLng
+      }
     })
   }
 }

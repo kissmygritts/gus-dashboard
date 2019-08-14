@@ -36,7 +36,9 @@ export default {
           event_uuid: m.event_uuid,
           common_name: m.common_name,
           obs_date: formattedDate,
-          ...m.wildlife_encounters[0]
+          ...m.wildlife_encounters[0],
+          x: m.x,
+          y: m.y
         }
       })
     }
