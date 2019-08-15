@@ -9,9 +9,9 @@
         <h2 class="text-xl italic text-gray-700">{{ species.speciesName }}</h2>
       </header>
 
-      <section id="encounter-table" class="bg-white mt-2">
-        <h3 class="">Animals Encountered</h3>
-        <p class="text-sm text-gray-600">
+      <section id="encounter-table" class="bg-white mt-2 p-4">
+        <h3 class="text-xl mb-2">Animals Encountered</h3>
+        <p class="text-sm text-gray-600 mb-4">
           Animal(s) encountered during this event. Some events record multiple
           animals (surveys) while others only record a single animal per event.
           Click on the animal ID, if present, to see all the data recorded for
@@ -21,7 +21,7 @@
         <!-- encounter table -->
         <table>
           <thead>
-            <tr>
+            <tr class="text-sm">
               <th>ID</th>
               <th>Age</th>
               <th>Sex</th>
@@ -29,9 +29,9 @@
               <th>Status</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="text-sm text-gray-800">
             <tr v-for="(row, index) in encounterTable" :key="index">
-              <td>{{ row.ind_id }}</td>
+              <td class="text-purple-800">{{ row.ind_id }}</td>
               <td>{{ row.age_class }}</td>
               <td>{{ row.sex }}</td>
               <td>{{ row.n }}</td>
@@ -143,12 +143,22 @@ export default {
 table {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid black;
+}
+
+thead {
+  border-bottom: 1px solid black;
 }
 
 td, th {
-  border: 1px solid black;
   padding: 0.5rem;
   text-align: left;
+}
+
+tbody tr:nth-child(even) {
+  background: #faf5ff;
+}
+
+tbody tr:hover {
+  background: rgba(233, 216, 253, 0.4);
 }
 </style>
