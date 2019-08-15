@@ -12,7 +12,7 @@
 
       <section id="encounter-table" class="bg-white mt-2 p-4">
         <h3 class="text-xl mb-2">Animals Encountered</h3>
-        <p class="text-sm text-gray-600 mb-4">
+        <p class="text-sm text-gray-600 mb-2">
           Animal(s) encountered during this event. Some events record multiple
           animals (surveys) while others only record a single animal per event.
           Click on the animal ID, if present, to see all the data recorded for
@@ -20,7 +20,7 @@
         </p>
 
         <!-- encounter table -->
-        <table>
+        <table class="mb-4">
           <thead>
             <tr class="text-sm">
               <th>ID</th>
@@ -42,6 +42,32 @@
         </table>
 
         <!-- marks section -->
+        <h3 class="text-xl mb-2">Marks</h3>
+        <p class="text-sm text-gray-600 mb-2">
+          Marks on any animal encountered are shown in the table below.
+        </p>
+
+        <table>
+          <thead>
+            <tr class="text-sm">
+              <th>Animal ID</th>
+              <th>Mark ID</th>
+              <th>Color</th>
+              <th>Location</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody class="text-sm text-gray-800">
+            <tr v-for="(row, index) in marksTable" :key="index">
+              <td>{{ row.ind_id }}</td>
+              <td>{{ row.mark_id }}</td>
+              <td>{{ row.mark_color }}</td>
+              <td>{{ row.mark_location }}</td>
+              <td>{{ row.mark_type }}</td>
+            </tr>
+          </tbody>
+        </table>
+
         <!-- devices section -->
       </section>
 
@@ -106,6 +132,24 @@ export default {
     encounterTable () {
       if (this.eventById) {
         return this.eventById.animal_encounters
+      } else {
+        return null
+      }
+    },
+    marksTable () {
+      if (this.eventById) {
+        const encounters = this.eventById.animal_encounters
+
+        const markArray = encounters.map(encounter => {
+          return encounter.marks.map(mark => {
+            return {
+              ind_id: encounter.ind_id,
+              ...mark
+            }
+          })
+        })
+
+        return [].concat.apply([], markArray)
       } else {
         return null
       }

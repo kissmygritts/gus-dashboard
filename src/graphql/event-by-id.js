@@ -26,6 +26,13 @@ export const EVENT_BY_ID = gql`
       n
       reencounter
       relocation
+      marks {
+        id
+        mark_id
+        mark_color
+        mark_type
+        mark_location
+      }
     }
   }
 }
