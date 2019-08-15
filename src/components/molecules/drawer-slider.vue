@@ -7,6 +7,7 @@
       <header>
         <h1 class="text-3xl text-purple-800">{{ species.commonName }}</h1>
         <h2 class="text-xl italic text-gray-700">{{ species.speciesName }}</h2>
+        <h2 class="text-xl text-gray-700">{{ new Date(eventById.event_start_timestamp).toDateString() }}</h2>
       </header>
 
       <section id="encounter-table" class="bg-white mt-2 p-4">
@@ -39,11 +40,16 @@
             </tr>
           </tbody>
         </table>
+
+        <!-- marks section -->
+        <!-- devices section -->
       </section>
 
     </div>
 
-    <button class="border p-4 border-purple-500" @click="toggleDrawer">Close Drawer</button>
+    <button class="close-btn border p-2 border-purple-500 rounded"
+      @click="toggleDrawer"
+    >close</button>
     <!-- <p v-if="eventUUID">{{ eventUUID }}</p>
     <pre><code>{{ eventById }}</code></pre> -->
   </div>
@@ -138,6 +144,13 @@ export default {
   right: 0;
   z-index: 999;
 } */
+
+/* close button */
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
 
 /* table style */
 table {
