@@ -10,11 +10,27 @@
       <l-tile-layer :url="url" />
 
       <!-- markers on the map -->
+      <!-- TODO: hover interaction -->
       <l-circle-marker
         v-for="(point, index) in mapPoints"
         :key="index"
         :latLng="point.latLng"
+        color="#553c9a"
+        fillColor="#553c9a"
+        :fillOpacity=0.6
+        :radius=5
+        :weight=1
         @click="handleMarkerClick(point.id)"
+      />
+
+      <l-circle-marker
+        v-if="hoveredFeedCard"
+        :latLng="hoveredFeedCard.latLng"
+        color="#4f68ba"
+        fillColor="#4f68ba"
+        :fillOpacity=1
+        :radius=8
+        :weight=2
       />
     </l-map>
   </div>
@@ -38,7 +54,8 @@ export default {
       showMap: true,
       zoom: 7,
       center: latLng(39.55, -117.0667),
-      url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'
+      url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+      hoveredFeedCard: null
     }
   },
   computed: {
@@ -86,6 +103,10 @@ export default {
             this.zoom
           )
         }
+      })
+
+      EventBus.$on('eb-feed-card:mouseenter', data => {
+        this.hoveredFeedCard = data
       })
     })
   }

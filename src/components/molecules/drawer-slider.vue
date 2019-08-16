@@ -3,7 +3,10 @@
     v-if="visible"
     :style="styleObject"
   >
-    <div class="content m-4">
+    <div v-if="$apollo.queries.eventById.loading">
+      fetching data...
+    </div>
+    <div v-else class="content m-4">
       <header>
         <h1 class="text-3xl text-purple-800">{{ species.commonName }}</h1>
         <h2 class="text-xl italic text-gray-700">{{ species.speciesName }}</h2>

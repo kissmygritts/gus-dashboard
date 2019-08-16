@@ -1,6 +1,8 @@
 <template>
-  <div class="observation-feed-card bg-white p-1 mb-1"
+  <div class="observation-feed-card bg-white p-1 mb-1 cursor-pointer"
     @click="cardClicked"
+    @mouseenter="emitMouseEnter"
+    @mouseleave="emitMouseLeave"
   >
     <div class="flex flex-row justify-between">
       <span class="text-lg">{{ observation.common_name }}</span>
@@ -51,6 +53,20 @@ export default {
           lng: this.observation.x
         }
       })
+    },
+
+    emitMouseEnter () {
+      EventBus.$emit('eb-feed-card:mouseenter', {
+        eventUUID: this.observation.event_uuid,
+        latLng: {
+          lat: this.observation.y,
+          lng: this.observation.x
+        }
+      })
+    },
+
+    emitMouseLeave () {
+      EventBus.$emit('eb-feed-card:mouseleave')
     }
   }
 }
