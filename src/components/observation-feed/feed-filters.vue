@@ -1,13 +1,13 @@
 <template>
   <div class="w-auto my-3">
     <button
-      class="w-full py-1 text-blue-400 border border-blue-400 border-2 rounded-sm hover:bg-blue-400 hover:text-white mb-2"
+      class="btn w-full"
       v-if="showFilters"
       @click="toggleShowFilters">
       Close Filters
     </button>
 
-    <div id="filters" v-if="showFilters">
+    <div id="filters" class="my-4" v-if="showFilters">
 
       <!-- input group -->
       <div class="mb-3">
@@ -17,6 +17,15 @@
         <input type="text" id="common_name" placeholder="desert bighorn sheep"
           class="shadow appearance-none-border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           v-model="commonName">
+      </div>
+
+      <div class="mb-3">
+        <label for="year" class="block text-gray-700 text-sm font-bold mb-1">
+          Year
+        </label>
+        <input type="text" id="year" placeholder="2018"
+          class="shadow appearance-none-border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          v-model="year">
       </div>
 
       <div class="mb-3">
@@ -32,15 +41,16 @@
 
     <!-- filter buttons -->
     <button
-      class="w-full py-1 text-purple-800 border border-purple-800 border-2 rounded-sm hover:bg-purple-800 hover:text-white"
+      class="btn w-full"
       v-if="showFilters"
       @click="emitApplyFilter">
       Apply Filters
     </button>
     <button
-      class="w-full py-1 text-purple-800 border border-purple-800 border-2 rounded-sm hover:bg-purple-800 hover:text-white"
       v-else
-      @click="toggleShowFilters">
+      class="btn w-full"
+      @click="toggleShowFilters"
+    >
       Open Filters
     </button>
   </div>
@@ -54,7 +64,8 @@ export default {
   data () {
     return {
       showFilters: false,
-      commonName: '',
+      commonName: null,
+      year: null,
       first: 25
     }
   },
@@ -85,6 +96,25 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.btn {
+  padding: 0.25rem;
+  color: #553c9a;
+  border: 1px solid #553c9a;
+  border-radius: 2px;
+  background-position: center;
+  transition: background 0.25s;
+}
 
+.btn:hover {
+  color: #ffffff;
+  background-color: #553c9a;
+  /* background: #553c9a radial-gradient(circle, transparent 1%, #553c9a 1%) center/15000%; */
+}
+
+.btn:active {
+  background-color: #8877b8;
+  background-size: 100%;
+  transition: background 0s;
+}
 </style>
