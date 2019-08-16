@@ -114,6 +114,9 @@ export default {
         return {
           id: this.eventUUID
         }
+      },
+      skip () {
+        return !this.visible
       }
     }
   },
