@@ -33,7 +33,7 @@ export default {
           1}-${date.getDate()}-${date.getFullYear()}`
 
         return {
-          event_uuid: m.event_uuid,
+          id: m.id,
           common_name: m.common_name,
           obs_date: formattedDate,
           ...m.wildlife_encounters[0],

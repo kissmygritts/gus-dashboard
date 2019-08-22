@@ -6,8 +6,7 @@ export const OBSERVATION_FEED_QUERY = gql`
       limit: $limit
       filter: $filter
     ) {
-      event_uuid
-      activity_name
+      id
       common_name
       species_name
       species_group

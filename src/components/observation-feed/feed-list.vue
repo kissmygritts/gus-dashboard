@@ -5,7 +5,7 @@
       ref="scroller"
       :items="observations"
       :itemSize="80"
-      keyField="event_uuid"
+      keyField="id"
       v-slot="{ item }"
       v-show="showFeed"
     >
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     scrollToItem () {
-      const idx = this.observations.map(m => m.event_uuid)
+      const idx = this.observations.map(m => m.id)
         .findIndex(i => i === this.scrollTo)
 
       console.log(`called scrollTo with id: ${this.scrollTo}, index: ${idx}`)

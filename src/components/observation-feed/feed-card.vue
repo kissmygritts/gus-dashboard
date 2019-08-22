@@ -47,7 +47,7 @@ export default {
   methods: {
     cardClicked () {
       EventBus.$emit('eb-card-clicked', {
-        eventUUID: this.observation.event_uuid,
+        eventUUID: this.observation.id,
         latLng: {
           lat: this.observation.y,
           lng: this.observation.x
@@ -57,7 +57,7 @@ export default {
 
     emitMouseEnter () {
       EventBus.$emit('eb-feed-card:mouseenter', {
-        eventUUID: this.observation.event_uuid,
+        eventUUID: this.observation.id,
         latLng: {
           lat: this.observation.y,
           lng: this.observation.x

@@ -62,7 +62,7 @@ export default {
     mapPoints () {
       return this.observations.map(m => {
         return {
-          id: m.event_uuid,
+          id: m.id,
           species: m.common_name,
           ind_id: m.wildlife_encounters ? m.wildlife_encounters[0].ind_id : '--',
           latLng: latLng([ m.y, m.x ])
