@@ -1,5 +1,5 @@
 <template>
-  <div class="drawer-slider h-screen bg-gray-200"
+  <div class="drawer-slider h-screen bg-gray-200 overflow-y-scroll"
     v-if="visible"
     :style="styleObject"
   >
@@ -7,13 +7,13 @@
       fetching data...
     </div>
     <div v-else class="content m-4">
-      <!-- <header>
-        <h1 class="text-3xl text-purple-800">{{ species.commonName }}</h1>
-        <h2 class="text-xl italic text-gray-700">{{ species.speciesName }}</h2>
-        <h2 class="text-xl text-gray-700">{{ new Date(eventById.event_start_timestamp).toDateString() }}</h2>
-      </header> -->
 
-      {{ getEventById }}
+      <header>
+        <h1 class="text-2xl text-purple-800 capitalize">{{ species.commonName }}</h1>
+        <h2 class="text-l italic text-gray-700">{{ species.speciesName }}</h2>
+        <!-- FIXME: properly format date -->
+        <h2 class="text-l text-gray-700">{{ new Date(getEventById.event_start_timestamp).toDateString() }}</h2>
+      </header>
 
       <section id="encounter-table" class="bg-white mt-2 p-4">
         <h3 class="text-xl mb-2">Animals Encountered</h3>
@@ -25,10 +25,10 @@
         </p>
 
         <!-- encounter table -->
-        <!-- <table class="mb-4">
+        <table class="mb-4">
           <thead>
             <tr class="text-sm">
-              <th>ID</th>
+              <th>NDOW ID</th>
               <th>Age</th>
               <th>Sex</th>
               <th>N</th>
@@ -44,7 +44,7 @@
               <td>{{ row.life_status }}</td>
             </tr>
           </tbody>
-        </table> -->
+        </table>
 
         <!-- marks section -->
         <h3 class="text-xl mb-2">Marks</h3>
@@ -52,7 +52,7 @@
           Marks on any animal encountered are shown in the table below.
         </p>
 
-        <!-- <table>
+        <table class="mb-4">
           <thead>
             <tr class="text-sm">
               <th>Animal ID</th>
@@ -71,9 +71,35 @@
               <td>{{ row.mark_type }}</td>
             </tr>
           </tbody>
-        </table> -->
+        </table>
 
         <!-- devices section -->
+
+        <!-- biometrics section -->
+        <h3 class="text-xl mb-2">Biometrics</h3>
+        <p class="text-gray-600 mb-2">
+          Biometrics recorded for animals encountered during this event are shown in the table below.
+        </p>
+
+        <table>
+          <thead>
+            <tr class="text-sm">
+              <th>NDOW ID</th>
+              <th>Measurement</th>
+              <th>Value</th>
+              <th>Units</th>
+            </tr>
+          </thead>
+          <tbody class="test-sm text-gray-800">
+            <tr v-for="(row, index) in biometricsTable" :key="index">
+              <td>{{ row.ind_id }}</td>
+              <td>{{ row.measurement }}</td>
+              <td>{{ row.value }}</td>
+              <td>{{ row.units }}</td>
+            </tr>
+          </tbody>
+        </table>
+
       </section>
 
     </div>
@@ -128,9 +154,11 @@ export default {
     styleObject () {
       return { width: `${this.drawerWidth}` }
     },
+
     species () {
-      if (this.eventById) {
-        const encounter = this.eventById.animal_encounters[0]
+      if (this.getEventById && this.getEventById.animal_encounters[0]) {
+        // each event has a single species per encounter
+        const encounter = this.getEventById.animal_encounters[0]
         return {
           speciesName: encounter.species_name,
           commonName: encounter.common_name
@@ -139,17 +167,20 @@ export default {
         return null
       }
     },
+
     encounterTable () {
-      if (this.eventById) {
-        return this.eventById.animal_encounters
+      if (this.getEventById && this.getEventById.animal_encounters) {
+        return this.getEventById.animal_encounters
       } else {
         return null
       }
     },
-    marksTable () {
-      if (this.eventById) {
-        const encounters = this.eventById.animal_encounters
 
+    marksTable () {
+      if (this.getEventById && this.getEventById.animal_encounters) {
+        const encounters = this.getEventById.animal_encounters
+
+        // each animal is an array of arrays, returns array of arrays
         const markArray = encounters.map(encounter => {
           return encounter.marks.map(mark => {
             return {
@@ -159,7 +190,27 @@ export default {
           })
         })
 
+        // concate into single array
         return [].concat.apply([], markArray)
+      } else {
+        return null
+      }
+    },
+
+    biometricsTable () {
+      if (this.getEventById && this.getEventById.animal_encounters) {
+        const encounters = this.getEventById.animal_encounters
+
+        const biometricArray = encounters.map(encounter => {
+          return encounter.biometrics.map(biometric => {
+            return {
+              ind_id: encounter.ind_id,
+              ...biometric
+            }
+          })
+        })
+
+        return [].concat.apply([], biometricArray)
       } else {
         return null
       }

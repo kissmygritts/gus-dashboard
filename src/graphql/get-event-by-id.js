@@ -33,6 +33,12 @@ query ($id: ID!) {
         mark_type
         mark_location
       }
+      biometrics {
+        id
+        measurement
+        value
+        units
+      }
     }
   }
 }
