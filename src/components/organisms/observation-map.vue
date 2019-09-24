@@ -42,7 +42,7 @@ import { LMap, LTileLayer, LCircleMarker } from 'vue2-leaflet'
 import { EventBus } from '@/event-bus.js'
 
 export default {
-  name: 'ObservationMap',
+  name: 'observation-map',
   components: {
     LMap,
     LTileLayer,
@@ -63,8 +63,8 @@ export default {
       return this.observations.map(m => {
         return {
           id: m.id,
-          species: m.common_name,
-          ind_id: m.wildlife_encounters ? m.wildlife_encounters[0].ind_id : '--',
+          species: m.encounters_observation_feed[0].common_name || 'unk',
+          ind_id: m.encounters_observation_feed[0].ind_id || '--',
           latLng: latLng([ m.y, m.x ])
         }
       })

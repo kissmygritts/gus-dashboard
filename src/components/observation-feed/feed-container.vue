@@ -1,24 +1,29 @@
 <template>
   <div class="feed-container container bg-gray-200 h-screen p-2">
-    <feed-filters
+    <!-- <feed-filters
       class="feed-container__filter-wrapper"
       @toggle-feed-filters="toggleFeed"
-    />
+    /> -->
+
     <feed-list
       class="feed-container__feed-list"
       :observations="formattedObservations"
       :showFeed="showFeed"
     />
+
   </div>
 </template>
 
 <script>
-import FeedFilters from './feed-filters.vue'
+// import FeedFilters from './feed-filters.vue'
 import FeedList from './feed-list.vue'
 
 export default {
   name: 'FeedContainer',
-  components: { FeedFilters, FeedList },
+  components: {
+    // FeedFilters,
+    FeedList
+  },
   props: [ 'observations' ],
   data () {
     return {
@@ -32,13 +37,33 @@ export default {
         const formattedDate = `${date.getMonth() +
           1}-${date.getDate()}-${date.getFullYear()}`
 
-        return {
+        const event = {
           id: m.id,
-          common_name: m.common_name,
           obs_date: formattedDate,
-          ...m.wildlife_encounters[0],
           x: m.x,
           y: m.y
+        }
+
+        let species
+        if (m.encounters_observation_feed.length > 0) {
+          const { common_name, species_name } = m.encounters_observation_feed[0]
+          species = { common_name, species_name }
+        } else {
+          species = null
+        }
+
+        let encounter
+        if (m.encounters_observation_feed.length > 0) {
+          const { ind_id, life_status, age_class, sex, n } = m.encounters_observation_feed[0]
+          encounter = { ind_id, life_status, age_class, sex, n }
+        } else {
+          encounter = null
+        }
+
+        return {
+          ...event,
+          species,
+          encounter
         }
       })
     }

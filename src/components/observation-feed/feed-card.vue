@@ -5,8 +5,8 @@
     @mouseleave="emitMouseLeave"
   >
     <div class="flex flex-row justify-between">
-      <span class="text-lg">{{ observation.common_name }}</span>
-      <span class="text-lg">{{ observation.ind_id }}</span>
+      <span class="text-lg">{{ observation.species.common_name }}</span>
+      <span class="text-lg">{{ observation.encounter.ind_id }}</span>
     </div>
     <div class="flex flex-row justify-between mt">
       <div class="text-center w-1/5 text-gray-800">
@@ -15,11 +15,11 @@
       </div>
       <div class="text-center w-1/5 text-gray-800">
         <p class="uppercase text-xs font-thin border-b border-gray-500">sex</p>
-        <p class="capitalize text-sm font-light">{{ observation.sex }}</p>
+        <p class="capitalize text-sm font-light">{{ observation.encounter.sex }}</p>
       </div>
       <div class="text-center w-1/5 text-gray-800">
         <p class="uppercase text-xs font-thin border-b border-gray-500">age</p>
-        <p class="capitalize text-sm font-light">{{ observation.age_class }}</p>
+        <p class="capitalize text-sm font-light">{{ observation.encounter.age_class }}</p>
       </div>
       <div class="text-center w-1/5 text-gray-800">
         <p class="uppercase text-xs font-thin border-b border-gray-500">status</p>
@@ -37,10 +37,11 @@ export default {
   props: [ 'observation' ],
   computed: {
     formatHarvest () {
-      if (this.observation.life_status === 'hunter harvest') {
+      const lifeStatus = this.observation.encounter.life_status
+      if (lifeStatus === 'hunter harvest') {
         return 'harvest'
       } else {
-        return this.observation.life_status
+        return lifeStatus
       }
     }
   },

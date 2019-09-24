@@ -1,19 +1,23 @@
 <template>
   <div class="map-dashboard flex flex-row">
+
     <div class="dashboard-left flex-grow-0 h-screen">
-      <feed-container :observations="observationFeed" />
+      <feed-container :observations="getObservationFeed" />
     </div>
+
     <div class="map-dash bg-green-500 flex-grow h-screen">
-      <observation-map :observations="observationFeed" />
+      <observation-map :observations="getObservationFeed" />
     </div>
+
     <drawer-slider :visible="drawerVisible" @drawer-visible="toggleDrawer" />
+
   </div>
 </template>
 
 <script>
 import { EventBus } from '@/event-bus.js'
 import FeedContainer from '@/components/observation-feed/feed-container.vue'
-import ObservationMap from '@/components/organisms/ObservationMap.vue'
+import observationMap from '@/components/organisms/observation-map.vue'
 import DrawerSlider from '@/components/molecules/drawer-slider.vue'
 import { OBSERVATION_FEED_QUERY } from '@/graphql/ObservationFeed_AllQuery.js'
 
@@ -21,12 +25,12 @@ export default {
   name: 'home',
   components: {
     FeedContainer,
-    ObservationMap,
+    observationMap,
     DrawerSlider
   },
   data () {
     return {
-      observationFeed: [],
+      getObservationFeed: [],
       queryParameters: {
         limit: { first: 15 }
       },
@@ -35,7 +39,7 @@ export default {
     }
   },
   apollo: {
-    observationFeed: {
+    getObservationFeed: {
       query: OBSERVATION_FEED_QUERY,
       variables () {
         return {

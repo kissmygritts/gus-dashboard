@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
-export const EVENT_BY_ID = gql`
-  query ($id: ID!) {
-  eventById (id: $id) {
+export const GET_EVENT_BY_ID = gql`
+query ($id: ID!) {
+  getEventById (id: $id) {
     id
     activity_id
     event_start_timestamp
@@ -14,8 +14,8 @@ export const EVENT_BY_ID = gql`
     created_at
     updated_at
     animal_encounters {
+      id
       animal_id
-      encounter_id
       species_id
       common_name
       species_name

@@ -3,15 +3,17 @@
     v-if="visible"
     :style="styleObject"
   >
-    <div v-if="$apollo.queries.eventById.loading">
+    <div v-if="$apollo.queries.getEventById.loading">
       fetching data...
     </div>
     <div v-else class="content m-4">
-      <header>
+      <!-- <header>
         <h1 class="text-3xl text-purple-800">{{ species.commonName }}</h1>
         <h2 class="text-xl italic text-gray-700">{{ species.speciesName }}</h2>
         <h2 class="text-xl text-gray-700">{{ new Date(eventById.event_start_timestamp).toDateString() }}</h2>
-      </header>
+      </header> -->
+
+      {{ getEventById }}
 
       <section id="encounter-table" class="bg-white mt-2 p-4">
         <h3 class="text-xl mb-2">Animals Encountered</h3>
@@ -23,7 +25,7 @@
         </p>
 
         <!-- encounter table -->
-        <table class="mb-4">
+        <!-- <table class="mb-4">
           <thead>
             <tr class="text-sm">
               <th>ID</th>
@@ -42,7 +44,7 @@
               <td>{{ row.life_status }}</td>
             </tr>
           </tbody>
-        </table>
+        </table> -->
 
         <!-- marks section -->
         <h3 class="text-xl mb-2">Marks</h3>
@@ -50,7 +52,7 @@
           Marks on any animal encountered are shown in the table below.
         </p>
 
-        <table>
+        <!-- <table>
           <thead>
             <tr class="text-sm">
               <th>Animal ID</th>
@@ -69,7 +71,7 @@
               <td>{{ row.mark_type }}</td>
             </tr>
           </tbody>
-        </table>
+        </table> -->
 
         <!-- devices section -->
       </section>
@@ -79,14 +81,13 @@
     <button class="close-btn border p-2 border-purple-500 rounded"
       @click="toggleDrawer"
     >close</button>
-    <!-- <p v-if="eventUUID">{{ eventUUID }}</p>
-    <pre><code>{{ eventById }}</code></pre> -->
+
   </div>
 </template>
 
 <script>
 import { EventBus } from '@/event-bus.js'
-import { EVENT_BY_ID } from '@/graphql/event-by-id.js'
+import { GET_EVENT_BY_ID } from '@/graphql/get-event-by-id.js'
 
 export default {
   name: 'DrawerSlider',
@@ -100,16 +101,18 @@ export default {
       default: '40%'
     }
   },
+
   data () {
     return {
       eventUUID: null,
       latLng: null,
-      eventById: null
+      getEventById: null
     }
   },
+
   apollo: {
-    eventById: {
-      query: EVENT_BY_ID,
+    getEventById: {
+      query: GET_EVENT_BY_ID,
       variables () {
         return {
           id: this.eventUUID
@@ -120,6 +123,7 @@ export default {
       }
     }
   },
+
   computed: {
     styleObject () {
       return { width: `${this.drawerWidth}` }
@@ -161,17 +165,20 @@ export default {
       }
     }
   },
+
   methods: {
     toggleDrawer () {
       this.$emit('drawer-visible', { visible: false })
     }
   },
+
   created () {
     EventBus.$on('eb-card-clicked', data => {
       this.eventUUID = data.eventUUID
       this.latLng = data.latLng
     })
   },
+
   updated () {
     console.log('updated')
     EventBus.$emit('eb-drawer-slider:update', {

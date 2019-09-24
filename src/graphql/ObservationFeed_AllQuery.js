@@ -1,19 +1,17 @@
 import gql from 'graphql-tag'
 
 export const OBSERVATION_FEED_QUERY = gql`
-  query ($limit: OffsetPaginationInput, $filter: ObservationFeedFilterInput) {
-    observationFeed (
+  query ($limit: OffsetPaginationInput) {
+    getObservationFeed (
       limit: $limit
-      filter: $filter
     ) {
       id
-      common_name
-      species_name
-      species_group
       event_start_timestamp
       x
       y
-      wildlife_encounters {
+      encounters_observation_feed {
+        common_name
+        species_name
         ind_id
         life_status
         age_class
