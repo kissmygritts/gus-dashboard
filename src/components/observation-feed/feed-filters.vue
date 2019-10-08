@@ -32,7 +32,7 @@
         <label for="limit" class="block text-gray-700 text-sm font-bold mb-1">
           How Many Records?
         </label>
-        <input type="number" id="limit" placeholder="desert bighorn sheep"
+        <input type="number" id="limit" placeholder="25"
           class="shadow appearance-none-border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           v-model.number="first">
       </div>
@@ -61,6 +61,7 @@ import { EventBus } from '@/event-bus.js'
 
 export default {
   name: 'FeedFilters',
+
   data () {
     return {
       showFilters: false,
@@ -69,6 +70,7 @@ export default {
       first: 25
     }
   },
+
   methods: {
     toggleShowFilters () {
       this.showFilters = !this.showFilters
@@ -79,6 +81,7 @@ export default {
       EventBus.$emit('eb-apply-filters', this.queryParameters)
     }
   },
+
   computed: {
     queryParameters () {
       let limit = {
@@ -89,7 +92,7 @@ export default {
 
       if (this.commonName) filter.common_name = { like: `%${this.commonName}%` }
       if (Object.keys(filter).length !== 0) query.filter = filter
-
+      console.log(query)
       return query
     }
   }

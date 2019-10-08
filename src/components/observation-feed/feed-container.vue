@@ -1,9 +1,9 @@
 <template>
   <div class="feed-container container bg-gray-200 h-screen p-2">
-    <!-- <feed-filters
+    <feed-filters
       class="feed-container__filter-wrapper"
       @toggle-feed-filters="toggleFeed"
-    /> -->
+    />
 
     <feed-list
       class="feed-container__feed-list"
@@ -15,13 +15,13 @@
 </template>
 
 <script>
-// import FeedFilters from './feed-filters.vue'
+import FeedFilters from './feed-filters.vue'
 import FeedList from './feed-list.vue'
 
 export default {
   name: 'FeedContainer',
   components: {
-    // FeedFilters,
+    FeedFilters,
     FeedList
   },
   props: [ 'observations' ],

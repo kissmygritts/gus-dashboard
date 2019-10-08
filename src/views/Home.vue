@@ -32,7 +32,7 @@ export default {
     return {
       getObservationFeed: [],
       queryParameters: {
-        limit: { first: 15 }
+        limit: { first: 50 }
       },
       mockParams: {},
       drawerVisible: false
