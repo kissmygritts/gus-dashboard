@@ -19,9 +19,9 @@
         <h3 class="text-xl mb-2">Animals Encountered</h3>
         <p class="text-sm text-gray-600 mb-2">
           Animal(s) encountered during this event. Some events record multiple
-          animals (surveys) while others only record a single animal per event.
+          animals per event (surveys) while others only record a single animal per event.
           Click on the animal ID, if present, to see all the data recorded for
-          that animal.
+          that animal over time.
         </p>
 
         <!-- encounter table -->
@@ -104,9 +104,12 @@
 
     </div>
 
-    <button class="close-btn border p-2 border-purple-500 rounded"
+    <button
+      class="close-btn border p-2 border-purple-500 rounded"
       @click="toggleDrawer"
-    >close</button>
+    >
+      close
+    </button>
 
   </div>
 </template>
