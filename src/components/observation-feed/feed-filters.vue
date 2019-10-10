@@ -1,5 +1,5 @@
 <template>
-  <div class="w-auto my-3">
+  <div class="w-auto my-3 mx-3">
     <button
       class="btn w-full"
       v-if="showFilters"

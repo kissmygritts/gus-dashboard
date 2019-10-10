@@ -75,8 +75,9 @@ export default {
 
 <style scoped>
 .observation-feed-card {
-  min-width: 375px;
-  max-width: 540px;
-  height: 76px;
+  margin-left: 12px;
+  margin-right: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 </style>

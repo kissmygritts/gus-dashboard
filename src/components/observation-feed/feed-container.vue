@@ -1,5 +1,5 @@
 <template>
-  <div class="feed-container container bg-gray-200 h-screen p-2">
+  <div class="feed-container container bg-gray-200 h-screen">
     <feed-filters
       class="feed-container__filter-wrapper"
       @toggle-feed-filters="toggleFeed"
