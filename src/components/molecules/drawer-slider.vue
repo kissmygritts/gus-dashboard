@@ -279,10 +279,10 @@ td, th {
 }
 
 tbody tr:nth-child(even) {
-  background: #faf5ff;
+  background: #f7f6f8;
 }
 
 tbody tr:hover {
-  background: rgba(233, 216, 253, 0.4);
+  background: #edebef;
 }
 </style>
