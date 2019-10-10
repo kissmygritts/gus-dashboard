@@ -10,8 +10,7 @@
       <l-tile-layer :url="url" />
 
       <!-- markers on the map -->
-      <!-- TODO: hover interaction -->
-      <l-circle-marker
+      <marker-with-tooltip
         v-for="(point, index) in mapPoints"
         :key="index"
         :latLng="point.latLng"
@@ -21,7 +20,9 @@
         :radius=5
         :weight=1
         @click="handleMarkerClick(point.id)"
-      />
+      >
+        {{ point.species }}: {{ point.ind_id }}
+      </marker-with-tooltip>
 
       <l-circle-marker
         v-if="hoveredFeedCard"
@@ -39,6 +40,7 @@
 <script>
 import { latLng } from 'leaflet'
 import { LMap, LTileLayer, LCircleMarker } from 'vue2-leaflet'
+import MarkerWithTooltip from '@/components/molecules/marker-with-tooltip.vue'
 import { EventBus } from '@/event-bus.js'
 
 export default {
@@ -46,7 +48,8 @@ export default {
   components: {
     LMap,
     LTileLayer,
-    LCircleMarker
+    LCircleMarker,
+    MarkerWithTooltip
   },
   props: [ 'observations' ],
   data () {
