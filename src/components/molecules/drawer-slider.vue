@@ -25,26 +25,9 @@
         </p>
 
         <!-- encounter table -->
-        <table class="mb-4">
-          <thead>
-            <tr class="text-sm">
-              <th>NDOW ID</th>
-              <th>Age</th>
-              <th>Sex</th>
-              <th>N</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody class="text-sm text-gray-800">
-            <tr v-for="(row, index) in encounterTable" :key="index">
-              <td class="text-purple-800">{{ row.ind_id }}</td>
-              <td>{{ row.age_class }}</td>
-              <td>{{ row.sex }}</td>
-              <td>{{ row.n }}</td>
-              <td>{{ row.life_status }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <simple-table class="mb-4"
+                      :fields="encounterFields"
+                      :data="encounterTable" />
 
         <!-- marks section -->
         <h3 class="text-xl mb-2">Marks</h3>
@@ -52,53 +35,32 @@
           Marks on any animal encountered are shown in the table below.
         </p>
 
-        <table class="mb-4">
-          <thead>
-            <tr class="text-sm">
-              <th>Animal ID</th>
-              <th>Mark ID</th>
-              <th>Color</th>
-              <th>Location</th>
-              <th>Type</th>
-            </tr>
-          </thead>
-          <tbody class="text-sm text-gray-800">
-            <tr v-for="(row, index) in marksTable" :key="index">
-              <td>{{ row.ind_id }}</td>
-              <td>{{ row.mark_id }}</td>
-              <td>{{ row.mark_color }}</td>
-              <td>{{ row.mark_location }}</td>
-              <td>{{ row.mark_type }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <simple-table class="mb-4"
+                      :fields="markFields"
+                      :data="marksTable" />
 
         <!-- devices section -->
 
         <!-- biometrics section -->
         <h3 class="text-xl mb-2">Biometrics</h3>
-        <p class="text-gray-600 mb-2">
+        <p class="text-sm text-gray-600 mb-2">
           Biometrics recorded for animals encountered during this event are shown in the table below.
         </p>
+        <simple-table class="mb-4"
+                      :fields="biometricsFields"
+                      :data="biometricsTable" />
 
-        <table>
-          <thead>
-            <tr class="text-sm">
-              <th>NDOW ID</th>
-              <th>Measurement</th>
-              <th>Value</th>
-              <th>Units</th>
-            </tr>
-          </thead>
-          <tbody class="test-sm text-gray-800">
-            <tr v-for="(row, index) in biometricsTable" :key="index">
-              <td>{{ row.ind_id }}</td>
-              <td>{{ row.measurement }}</td>
-              <td>{{ row.value }}</td>
-              <td>{{ row.units }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <!-- samples section -->
+
+        <!-- labids section -->
+
+        <!-- meds section -->
+
+        <!-- vitals section -->
+
+        <!-- injuries section -->
+
+        <!-- waddl section -->
 
       </section>
 
@@ -115,11 +77,13 @@
 </template>
 
 <script>
+import SimpleTable from '@/components/molecules/simple-table.vue'
 import { EventBus } from '@/event-bus.js'
 import { GET_EVENT_BY_ID } from '@/graphql/get-event-by-id.js'
 
 export default {
   name: 'DrawerSlider',
+  components: { SimpleTable },
   props: {
     visible: {
       type: Boolean,
@@ -135,7 +99,27 @@ export default {
     return {
       eventUUID: null,
       latLng: null,
-      getEventById: null
+      getEventById: null,
+      encounterFields: {
+        ind_id: 'NDOW ID',
+        age_class: 'Age',
+        sex: 'Sex',
+        n: 'N',
+        life_status: 'Status'
+      },
+      biometricsFields: {
+        ind_id: 'NDOW ID',
+        measurement: 'Measurement',
+        value: 'Value',
+        units: 'Units'
+      },
+      markFields: {
+        ind_id: 'NDOW ID',
+        mark_id: 'Mark ID',
+        mark_color: 'Color',
+        mark_location: 'Location',
+        mark_type: 'Type'
+      }
     }
   },
 
