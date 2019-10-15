@@ -39,6 +39,25 @@ query ($id: ID!) {
         value
         units
       }
+      samples {
+        id
+        sample
+      }
+      medications {
+        id
+        medication
+        # med_time
+        med_dose
+        med_unit
+        med_method
+      }
+      vitals {
+        id
+        # time_recorded
+        temperature
+        heart_rate
+        respiratory_rate
+      }
     }
   }
 }

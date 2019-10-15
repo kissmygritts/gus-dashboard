@@ -36,7 +36,7 @@
         </p>
 
         <simple-table class="mb-4"
-                      :fields="markFields"
+                      :fields="marksFields"
                       :data="marksTable" />
 
         <!-- devices section -->
@@ -51,18 +51,66 @@
                       :data="biometricsTable" />
 
         <!-- samples section -->
+        <h3 class="text-xl mb-2">Samples</h3>
+        <p class="text-sm text-gray-600 mb-2">
+          Samples collected for animals encountered during this event are shown in the table below.
+          Some samples will have multiple collected. This isn't always recorded on data sheets, but if
+          it was, the number of samples collected is shown.
+        </p>
+        <simple-table class="mb-4"
+                      :fields="samplesFields"
+                      :data="samplesTable" />
 
         <!-- labids section -->
+        <h3 class="text-xl mb-2">Lab IDs</h3>
+        <p class="text-sm text-gray-600 mb-2">
+          Lab IDs are unique IDs given to samples collected for each animal. These IDs are used to
+          relate lab results to an animal encounter. Each time an animal is encountered it receives
+          a different Lab ID. If the encounter is a mortality then the NDOW ID will be used as the
+          LAB ID.
+        </p>
 
         <!-- meds section -->
+        <h3 class="text-xl mb-2">Medications</h3>
+        <p class="text-sm text-gray-600 mb-2">
+          Medications administered to the animals encountered are recorded below.
+        </p>
+        <simple-table class="mb-4"
+                      :fields="medsFields"
+                      :data="medsTable" />
 
         <!-- vitals section -->
+        <h3 class="text-xl mb-2">Vitals</h3>
+        <p class="text-sm text-gray-600 mb-2">
+          Vital signs recorded during the encounter are shown below. Temperature is the most
+          consistently recorded vital sign. If there isn't a time in the recorded at field,
+          those vital signs were recorded by the capture crew.
+        </p>
+        <simple-table class="mb-4"
+                      :fields="vitalsFields"
+                      :data="vitalsTable" />
 
         <!-- injuries section -->
+        <h3 class="text-xl mb-2">Injuries</h3>
+        <p class="text-sm text-gray-600 mb-2">
+          Any injuries, or abnormalities recorded during the encounter are shown here. If the injury
+          was treated during the course of the encounter, it may also be recorded and shown below.
+          Often, injury treatment is to clean or flush the wounded area.
+        </p>
 
-        <!-- waddl section -->
+        <!-- lab results section -->
+        <h3 class="text-xl mb-2">Lab Results</h3>
+        <p class="text-sm text-gray-600 mb-2">
+          Any samples sent to a lab for diagnostic tests, with lab results returned from the lab
+          are displayed below. This table is of the raw lab results, for more information about
+          the results contact the wildlife health lab.
+        </p>
 
       </section>
+
+      <footer class="my-2">
+        <p class="text-sm text-gray-600 mb-2 text-right">Event UUID: {{ eventUUID }}</p>
+      </footer>
 
     </div>
 
@@ -79,6 +127,7 @@
 <script>
 import SimpleTable from '@/components/molecules/simple-table.vue'
 import { EventBus } from '@/event-bus.js'
+import { formatSummaryTable } from '@/utils/format-summary-tables.js'
 import { GET_EVENT_BY_ID } from '@/graphql/get-event-by-id.js'
 
 export default {
@@ -113,12 +162,29 @@ export default {
         value: 'Value',
         units: 'Units'
       },
-      markFields: {
+      marksFields: {
         ind_id: 'NDOW ID',
         mark_id: 'Mark ID',
         mark_color: 'Color',
         mark_location: 'Location',
         mark_type: 'Type'
+      },
+      samplesFields: {
+        ind_id: 'NDOW ID',
+        sample: 'Sample'
+      },
+      medsFields: {
+        ind_id: 'NDOW ID',
+        medication: 'Medication',
+        med_dose: 'Dose',
+        med_unit: 'Unit',
+        med_method: 'Method'
+      },
+      vitalsFields: {
+        ind_id: 'NDOW ID',
+        temperature: 'Temp',
+        heart_rate: 'Heart Rate',
+        respiratory_rate: 'Resp Rate'
       }
     }
   },
@@ -164,43 +230,23 @@ export default {
     },
 
     marksTable () {
-      if (this.getEventById && this.getEventById.animal_encounters) {
-        const encounters = this.getEventById.animal_encounters
-
-        // each animal is an array of arrays, returns array of arrays
-        const markArray = encounters.map(encounter => {
-          return encounter.marks.map(mark => {
-            return {
-              ind_id: encounter.ind_id,
-              ...mark
-            }
-          })
-        })
-
-        // concate into single array
-        return [].concat.apply([], markArray)
-      } else {
-        return null
-      }
+      return formatSummaryTable(this.getEventById.animal_encounters, 'marks')
     },
 
     biometricsTable () {
-      if (this.getEventById && this.getEventById.animal_encounters) {
-        const encounters = this.getEventById.animal_encounters
+      return formatSummaryTable(this.getEventById.animal_encounters, 'biometrics')
+    },
 
-        const biometricArray = encounters.map(encounter => {
-          return encounter.biometrics.map(biometric => {
-            return {
-              ind_id: encounter.ind_id,
-              ...biometric
-            }
-          })
-        })
+    samplesTable () {
+      return formatSummaryTable(this.getEventById.animal_encounters, 'samples')
+    },
 
-        return [].concat.apply([], biometricArray)
-      } else {
-        return null
-      }
+    medsTable () {
+      return formatSummaryTable(this.getEventById.animal_encounters, 'medications')
+    },
+
+    vitalsTable () {
+      return formatSummaryTable(this.getEventById.animal_encounters, 'vitals')
     }
   },
 
