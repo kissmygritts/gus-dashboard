@@ -58,6 +58,25 @@ query ($id: ID!) {
         heart_rate
         respiratory_rate
       }
+      labids {
+        id
+        labid
+      }
+      lab_results {
+        id
+        case_num
+        test
+        result
+        lvl
+        isolate
+        lab
+      }
+      injuries {
+        id
+        injury_type
+        injury_description
+        injury_treatment
+      }
     }
   }
 }

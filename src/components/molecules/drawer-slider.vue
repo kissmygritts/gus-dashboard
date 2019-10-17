@@ -7,6 +7,12 @@
       fetching data...
     </div>
     <div v-else class="content m-4">
+      <button
+        class="close-btn border p-2 border-purple-500 rounded"
+        @click="toggleDrawer"
+      >
+        close
+      </button>
 
       <header>
         <h1 class="text-2xl text-purple-800 capitalize">{{ species.commonName }}</h1>
@@ -64,11 +70,14 @@
         <!-- labids section -->
         <h3 class="text-xl mb-2">Lab IDs</h3>
         <p class="text-sm text-gray-600 mb-2">
-          Lab IDs are unique IDs given to samples collected for each animal. These IDs are used to
+          Lab IDs are unique IDs given to all samples collected for each animal. These IDs are used to
           relate lab results to an animal encounter. Each time an animal is encountered it receives
-          a different Lab ID. If the encounter is a mortality then the NDOW ID will be used as the
-          LAB ID.
+          a different Lab ID. If the encounter is a mortality then the NDOW ID can be used as the
+          Lab ID.
         </p>
+        <simple-table class="mb-4"
+                      :fields="labidsFields"
+                      :data="labidsTable" />
 
         <!-- meds section -->
         <h3 class="text-xl mb-2">Medications</h3>
@@ -97,6 +106,9 @@
           was treated during the course of the encounter, it may also be recorded and shown below.
           Often, injury treatment is to clean or flush the wounded area.
         </p>
+        <simple-table class="mb-4"
+                      :fields="injuriesFields"
+                      :data="injuriesTable" />
 
         <!-- lab results section -->
         <h3 class="text-xl mb-2">Lab Results</h3>
@@ -105,6 +117,9 @@
           are displayed below. This table is of the raw lab results, for more information about
           the results contact the wildlife health lab.
         </p>
+        <simple-table class="mb-4"
+                      :fields="labResultsFields"
+                      :data="labResultsTable" />
 
       </section>
 
@@ -113,13 +128,6 @@
       </footer>
 
     </div>
-
-    <button
-      class="close-btn border p-2 border-purple-500 rounded"
-      @click="toggleDrawer"
-    >
-      close
-    </button>
 
   </div>
 </template>
@@ -162,6 +170,22 @@ export default {
         value: 'Value',
         units: 'Units'
       },
+      injuriesFields: {
+        ind_id: 'NDOW ID',
+        injury_type: 'Injury Type',
+        injury_description: 'Injury Description'
+      },
+      labidsFields: {
+        ind_id: 'NDOW ID',
+        labid: 'Lab ID'
+      },
+      labResultsFields: {
+        ind_id: 'NDOW ID',
+        case_num: 'Case',
+        test: 'Test',
+        result: 'Result',
+        isolate: 'Isolate'
+      },
       marksFields: {
         ind_id: 'NDOW ID',
         mark_id: 'Mark ID',
@@ -169,16 +193,16 @@ export default {
         mark_location: 'Location',
         mark_type: 'Type'
       },
-      samplesFields: {
-        ind_id: 'NDOW ID',
-        sample: 'Sample'
-      },
       medsFields: {
         ind_id: 'NDOW ID',
         medication: 'Medication',
         med_dose: 'Dose',
         med_unit: 'Unit',
         med_method: 'Method'
+      },
+      samplesFields: {
+        ind_id: 'NDOW ID',
+        sample: 'Sample'
       },
       vitalsFields: {
         ind_id: 'NDOW ID',
@@ -227,6 +251,18 @@ export default {
       } else {
         return null
       }
+    },
+
+    injuriesTable () {
+      return formatSummaryTable(this.getEventById.animal_encounters, 'injuries')
+    },
+
+    labidsTable () {
+      return formatSummaryTable(this.getEventById.animal_encounters, 'labids')
+    },
+
+    labResultsTable () {
+      return formatSummaryTable(this.getEventById.animal_encounters, 'lab_results')
     },
 
     marksTable () {
@@ -287,8 +323,10 @@ export default {
 } */
 
 /* close button */
+/* position: absolute; will keep the button in frame as user scrolls */
 .close-btn {
-  position: absolute;
+  position: relative;
+  float: right;
   top: 8px;
   right: 8px;
 }
