@@ -1,9 +1,13 @@
 import gql from 'graphql-tag'
 
 export const OBSERVATION_FEED_QUERY = gql`
-  query ($limit: OffsetPaginationInput) {
+  query (
+    $limit: OffsetPaginationInput
+    $filter: ObservationFeedFilterInput
+  ) {
     getObservationFeed (
       limit: $limit
+      filter: $filter
     ) {
       id
       event_start_timestamp

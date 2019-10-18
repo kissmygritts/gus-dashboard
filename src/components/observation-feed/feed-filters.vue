@@ -91,8 +91,13 @@ export default {
       let query = { limit }
 
       if (this.commonName) filter.common_name = { like: `%${this.commonName}%` }
+      if (this.year) {
+        let startDate = `${this.year}-01-01`
+        let endDate = `${this.year}-12-31`
+        filter.event_start_timestamp = { between: [ startDate, endDate ] }
+      }
+
       if (Object.keys(filter).length !== 0) query.filter = filter
-      console.log(query)
       return query
     }
   }
